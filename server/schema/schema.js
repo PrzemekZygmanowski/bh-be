@@ -4,6 +4,7 @@ import {
   GraphQLString,
   GraphQLSchema,
   GraphQLList,
+  GraphQLNonNull,
 } from 'graphql';
 import { User } from '../models/User.js';
 
@@ -47,5 +48,32 @@ const RootQuery = new GraphQLObjectType({
     },
   }),
 });
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addUser: {
+      type: UserType,
+      args: {
+        firstName: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
+        lastName: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
+        email: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
+      },
+      resolve(parent, args) {
+        const user = new User({
+          firstName: args.firstName,
+          lastName: args.lastName,
+          email: args.email,
+        });
+        return user.save();
+      },
+    },
+  },
+});
 
-export default new GraphQLSchema({ query: RootQuery });
+export default new GraphQLSchema({ query: RootQuery, mutation });
