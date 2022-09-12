@@ -23,6 +23,9 @@ const UserType = new GraphQLObjectType({
     email: {
       type: GraphQLString,
     },
+    date: {
+      type: GraphQLString,
+    },
   }),
 });
 
@@ -63,14 +66,27 @@ const mutation = new GraphQLObjectType({
         email: {
           type: new GraphQLNonNull(GraphQLString),
         },
+        date: {
+          type: new GraphQLNonNull(GraphQLString),
+        },
       },
       resolve(parent, args) {
         const user = new User({
           firstName: args.firstName,
           lastName: args.lastName,
           email: args.email,
+          date: args.date,
         });
         return user.save();
+      },
+    },
+    deleteUser: {
+      type: UserType,
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) },
+      },
+      resolve(parent, args) {
+        return User.findByIdAndRemove(args.id);
       },
     },
   },
