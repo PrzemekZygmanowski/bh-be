@@ -10,10 +10,11 @@ This project is supposed to present a simple form with the following fields:
 
 To run the project, you need to follow these steps:
 
+### `install depedencies - yarn`
+
 ### `complete environmental data`
 
 in order for the project to start, complete the .env file in the main directory with the data that will be sent by e-mail,
-and in the db.js file (bh-be \ server \ config \ db.js) substitute the URI address under the variable MONGO_URI
 
 ### `start project in development mode - yarn dev`
 
